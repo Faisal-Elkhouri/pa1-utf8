@@ -1,0 +1,3 @@
+I used tests created by my fellow group members during the second lab to test hte is_valid_ascii() function and the width_from_start_byte() functions.
+
+I also used the inspect() function developed for lecture 3 to debug my code during the creation process (it is not in the final main.c code).
