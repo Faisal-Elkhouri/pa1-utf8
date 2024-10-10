@@ -59,14 +59,10 @@ int32_t codepoint_index_to_byte_index(char str[], int32_t cpi){
     int last_utf8_flag = 0;
     while (cp_counter <= cpi && str[byte_counter] != 0){
         if((str[byte_counter] & 0b11000000) != 0b10000000) {
-            printf("if was true: %d\n", str[byte_counter]);
             last_utf8_flag = width_from_start_byte(str[byte_counter]);
             cp_counter++;
         }
-        else{
-                        printf("if was false: %d\n", str[byte_counter]);
 
-        }
         byte_counter++;
     }
     byte_counter--;
@@ -75,16 +71,30 @@ int32_t codepoint_index_to_byte_index(char str[], int32_t cpi){
 }
 
 void utf8_substring(char str[], int32_t cpi_start, int32_t cpi_end, char result[]){
-    
+    //error checking
+    if (cpi_start < 0 || cpi_end < 0 || cpi_end-cpi_start < 0) return;
+
+    int start = codepoint_index_to_byte_index(str, cpi_start);
+    for (int i = 0; i < cpi_end-cpi_start; i++){
+        result[i] = str[i+start];
+    }
+    result[cpi_end-cpi_start] = 0;
 }
+
+//milestone 3
+
 
 
 int main(){
     char inp[100];
-    int index = 0;
+    int start = 0;
+    int end = 0;
     scanf("%s",inp);
-    scanf("%d", &index);
+    scanf("%d", &start);
+    scanf("%d", &end);
     inspect(inp);
-    printf("%d\n", codepoint_index_to_byte_index(inp,index));
+    char result[codepoint_index_to_byte_index(inp, end) - start + 1];
+    utf8_substring(inp,start,end,result);
+    printf("%s\n", result);
     return 0;
 }
